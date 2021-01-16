@@ -18,6 +18,7 @@ These are the current features/changes I want to make:
 - [ ] Improve animation support (avatars, frames/steps)
 - [ ] Improve costume support (loading, displaying, keybinds)
 - [ ] Improve/simplify stage system
+- [ ] Improve code (add functions)
 
 ---
 
