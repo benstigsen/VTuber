@@ -16,7 +16,8 @@ These are the current features/changes I want to make:
 - [ ] Add image resizing
 - [ ] Improve animation support
 - [ ] Improve costume support (loading, displaying, keybinds)
-- [ ] Improve stage system
+- [ ] Improve/simplify stage system
+- [ ]
 
 ---
 
@@ -69,4 +70,4 @@ elif (volume > 6):
 elif (volume <= 6): # General noise level
     step = 0
 ```
-Costumize this and test it a few times. Try talking in different volumes to see if it changes frames correctly.
+Customize this and test it a few times. Try talking in different volumes to see if it changes frames correctly.
