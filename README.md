@@ -14,10 +14,10 @@ Currently the focus is to extend it a bit more, simplify code and improve user-f
 
 These are the current features/changes I want to make:  
 - [ ] Add image resizing
-- [ ] Improve animation support
+- [ ] Add user-friendly volume setup
+- [ ] Improve animation support (avatars, frames/steps)
 - [ ] Improve costume support (loading, displaying, keybinds)
 - [ ] Improve/simplify stage system
-- [ ]
 
 ---
 
