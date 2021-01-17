@@ -89,6 +89,13 @@ while running:
             if ((event.key == pygame.K_i) and ((stage == BLANK) or (stage == None))):
                 stage = INTRO
                 step = 0
+            # Reload
+            elif (event.key == pygame.K_r):
+                screen.fill((255, 255, 255))
+                if (stage == TALK):
+                    screen.blit(avatars[step], (0, 0))
+
+                pygame.display.update()
             else:
                 if (stage == TALK):
                     if (event.key == pygame.K_n):
