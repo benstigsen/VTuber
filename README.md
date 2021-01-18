@@ -49,14 +49,14 @@ Then go to [PyAudio](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio) and do
 ---
 
 Then you download / clone this repository, and run `./vtuber.py`. By default there should be a white screen. Use the following keybinds to get introduced to the default character Bob:
-- **i** (makes Bob walk into the screen)
-- **o** (makes Bob walk out of the screen)
-- **f** (make Bob formal _(great for school presentations)_)
-- **g** (make Bob a gangster _(don't ask me why)_)
-- **s** (make Bob a sheriff _(again, don't ask me why)_)
-- **d** (make Bob dance)
+- `i` (makes Bob walk into the screen)
+- `o` (makes Bob walk out of the screen)
+- `f` (make Bob formal _(great for school presentations)_)
+- `g` (make Bob a gangster _(don't ask me why)_)
+- `s` (make Bob a sheriff _(again, don't ask me why)_)
+- `d` (make Bob dance)
 
-***NOTE: Do not minimize the window, it will clear the screen and remove keybind focus / volume control. If you do minimize it, unminimize it and click "r" to reload the screen.***
+***NOTE: Do not minimize the window, it will clear the screen and remove keybind focus / volume control. If you do minimize it, unminimize it and click `r` to reload the screen.***
 
 When you've made Bob walk into the screen and you start talking, it probably won't match your volume very well. For this you have to load up `vtuber.py` in a text editor, and then uncomment `#print(volume)` on line 142. Try running it again, and pay attention to the default noise level and your normal talking level. Edit the if-statements right above line 142 to match your volumes. My default talking volume is around 26, and the general noise level (noise, keyboard/mouse, breathing, etc...) is around 4-5.
 
