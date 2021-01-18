@@ -33,7 +33,7 @@ These are the current features/changes I want to make:
 
 ### Installation  
 The Python modules can be installed with:   
-`pip install pillow, pygame, numpy, pyaudio, aubio`
+`pip install pillow pygame numpy pyaudio aubio`
 
 ---
 
