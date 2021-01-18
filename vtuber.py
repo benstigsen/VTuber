@@ -77,6 +77,45 @@ steps = len(avatars) - 1
 
 running = True
 
+def vtuberSetupVolume():
+    pass
+
+def vtuberLoadAvatars():
+    pass
+
+def vtuberLoadCostumes():
+    pass
+
+def vtuberLoadAnimations():
+    pass
+
+def vtuberLoadAnimations():
+    pass
+
+# Change avatar
+def vtuberChangeAvatar(n):
+    pass
+
+# Change costume
+def vtuberChangeCostume(costume):
+    screen.blit(costumes[costume], (0, 0))
+    pygame.display.update()
+    pass
+
+# Change Stage
+def vtuberChangeStage(n):
+    global stage
+    stage = n
+    step = 0
+
+# Redraw screen
+def vtuberRedraw():
+    screen.fill((255, 255, 255))
+    if (stage == TALK):
+        screen.blit(avatars[step], (0, 0))
+
+    pygame.display.update()
+
 # Draw loop
 while running:
     for event in pygame.event.get():
@@ -86,17 +125,14 @@ while running:
             break
         # Extras
         elif (event.type == pygame.KEYUP):
+            # Intro
             if ((event.key == pygame.K_i) and ((stage == BLANK) or (stage == None))):
-                stage = INTRO
-                step = 0
+                vtuberChangeStage(INTRO)
             # Reload
             elif (event.key == pygame.K_r):
-                screen.fill((255, 255, 255))
-                if (stage == TALK):
-                    screen.blit(avatars[step], (0, 0))
-
-                pygame.display.update()
+                vtuberRedraw()
             else:
+                # Talk
                 if (stage == TALK):
                     if (event.key == pygame.K_n):
                         screen.blit(avatars[0], (0, 0))
@@ -111,8 +147,7 @@ while running:
                         key = pygame.key.name(event.key)
 
                         if (key in costumes):
-                            screen.blit(costumes[key], (0, 0))
-                            pygame.display.update()
+                            vtuberChangeCostume(key)
 
     # Intro stage
     if (stage == INTRO):
