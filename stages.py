@@ -1,0 +1,7 @@
+BLANK = 0
+INTRO = 1
+TALK  = 2
+OUTRO = 3
+DANCE = 4
+IDLE  = 5
+

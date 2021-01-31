@@ -7,26 +7,17 @@ import pyaudio
 import numpy as np
 import glob
 
-# Paths
-PATH_AVATARS = "avatar"
-PATH_OUTFITS  = "outfits"
+from stages import *
+from config import *
 
-# Mouth region to be updated (x, y, w, h)
+# Mouth region (x, y, w, h)
 REGION_MOUTH = (260, 370, 470, 210)
 
-BLANK = 0
-INTRO = 1
-TALK  = 2
-OUTRO = 3
-DANCE = 4
-IDLE  = 5
 stage = BLANK
 
 screen = None
 avatars, outfits, animations = None, None, None
 outfit_current = None
-
-FRAMES_PER_BUFFER = 2048 // 2
 
 # Get image size to make canvas fit image
 img_size = 0, 0
@@ -52,7 +43,7 @@ def vtuberLoadAvatars():
 # - TO-DO: Add outfits automatically
 def vtuberLoadOutfits():
     outfits = {}
-    
+
     for image in glob.glob(f"{PATH_OUTFITS}/outfit_*.png"):
         print(image)
         outfits[(image.split("\\")[image.count("\"") - 1]).split("_")[1][0]] = pygame.image.load(image)
@@ -115,11 +106,11 @@ def vtuberInit():
     pA = pyaudio.PyAudio()
     mic = pA.open(
         format = pyaudio.paFloat32, channels = 1,
-        rate = 44100, input = True,
+        rate = RATE, input = True,
         frames_per_buffer = FRAMES_PER_BUFFER
     )
 
-    # PyGame
+    # Pygame
     pygame.init()
     size = img_size
     screen = pygame.display.set_mode(size)
@@ -161,8 +152,8 @@ def main():
                     stage = INTRO
                 # Idle (no mouth movement)
                 elif ((event.key == pygame.K_s) and (
-                    (stage == TALK) or 
-                    (stage == IDLE) or 
+                    (stage == TALK) or
+                    (stage == IDLE) or
                     (stage == DANCE) or
                     (stage == None))):
 
@@ -204,7 +195,7 @@ def main():
                 screen.blit(avatars[0], (0, 0))
                 step = 0
                 stage = TALK
-            
+
             pygame.display.update()
 
         # Talk stage
@@ -274,7 +265,7 @@ def main():
             screen.fill((255, 255, 255))
             pygame.display.update()
             stage = None
-            
+
         clock.tick(50)
 
     pygame.quit()
