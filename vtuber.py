@@ -10,9 +10,6 @@ import glob
 from stages import *
 from config import *
 
-# Mouth region (x, y, w, h)
-REGION_MOUTH = (260, 370, 470, 210)
-
 stage = BLANK
 
 screen = None
