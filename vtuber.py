@@ -44,6 +44,7 @@ def vtuberLoadAvatars():
 
 # Load Outfits
 # - TO-DO: Add outfit names
+# - TO-DO: Add keybind option
 # - TO-DO: Add outfits automatically
 def vtuberLoadOutfits():
     outfits = {}
@@ -76,8 +77,8 @@ def vtuberLoadAnimations():
     return animations
 
 # Change avatar
-def vtuberChangeAvatar(n):
-    pass
+def vtuberChangeAvatar(n, pos=(0, 0)):
+    screen.blit(avatars[n], pos)
 
 # Change outfit
 def vtuberChangeOutfit(outfit = None):
@@ -91,7 +92,12 @@ def vtuberChangeOutfit(outfit = None):
         outfit_current = outfit
         screen.blit(outfits[outfit_current], (0, 0))
 
-    pygame.display.update()
+# Handle keypresses
+# TO-DO: Add outfit handling
+# TO-DO: Add avatar handling
+# TO-DO: Add stage handling
+def vtuberHandleKey():
+    pass
 
 # Redraw screen
 def vtuberRedraw(step = 0):
@@ -99,7 +105,14 @@ def vtuberRedraw(step = 0):
     if (stage == TALK):
         screen.blit(avatars[step], (0, 0))
 
-    pygame.display.update()
+# Initiate pygame and variables
+def vtuberInit():
+    pygame.init()
+    size = img_size
+    screen = pygame.display.set_mode(size)
+    clock = pygame.time.Clock()
+
+    return size, screen, clock
 
 def main():
     global stage
@@ -124,12 +137,7 @@ def main():
         frames_per_buffer = FRAMES_PER_BUFFER
     )
 
-    pygame.init()
-
-    size = width, height = img_size
-    screen = pygame.display.set_mode(size)
-
-    clock = pygame.time.Clock()
+    size, screen, clock = vtuberInit()
 
     running = True
 
@@ -159,6 +167,7 @@ def main():
                 # Reload
                 elif (event.key == pygame.K_r):
                     vtuberRedraw()
+                    pygame.display.update()
                 else:
                     # Talk
                     if (stage == TALK):
@@ -176,6 +185,7 @@ def main():
 
                             if (key in outfits):
                                 vtuberChangeOutfit(key)
+                                pygame.display.update()
 
         # Intro stage
         if (stage == INTRO):
@@ -215,7 +225,7 @@ def main():
             # Only draw if something needs to be updated
             if (step_prev != step):
                 step_prev = step
-                screen.blit(avatars[step], (0, 0))
+                vtuberChangeAvatar(step, (0, 0))
 
                 # Mouth region
                 pygame.display.update(REGION_MOUTH)
