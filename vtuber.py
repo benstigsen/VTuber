@@ -1,3 +1,5 @@
+# - TO-DO: Add stages.py
+# - TO-DO: Add config.py
 from PIL import Image
 import aubio
 import pygame
@@ -23,6 +25,8 @@ stage = BLANK
 screen = None
 avatars, outfits, animations = None, None, None
 outfit_current = None
+
+FRAMES_PER_BUFFER = 2048 // 2
 
 # Get image size to make canvas fit image
 img_size = 0, 0
@@ -93,9 +97,9 @@ def vtuberChangeOutfit(outfit = None):
         screen.blit(outfits[outfit_current], (0, 0))
 
 # Handle keypresses
-# TO-DO: Add outfit handling
-# TO-DO: Add avatar handling
-# TO-DO: Add stage handling
+# - TO-DO: Add outfit handling
+# - TO-DO: Add avatar handling
+# - TO-DO: Add stage handling
 def vtuberHandleKey():
     pass
 
@@ -107,12 +111,21 @@ def vtuberRedraw(step = 0):
 
 # Initiate pygame and variables
 def vtuberInit():
+    # Microphone
+    pA = pyaudio.PyAudio()
+    mic = pA.open(
+        format = pyaudio.paFloat32, channels = 1,
+        rate = 44100, input = True,
+        frames_per_buffer = FRAMES_PER_BUFFER
+    )
+
+    # PyGame
     pygame.init()
     size = img_size
     screen = pygame.display.set_mode(size)
     clock = pygame.time.Clock()
 
-    return size, screen, clock
+    return (mic, size, screen, clock)
 
 def main():
     global stage
@@ -123,21 +136,14 @@ def main():
     outfits = vtuberLoadOutfits()
     animations = vtuberLoadAnimations()
 
+    init = vtuberInit()
+    mic = init[0]
+    size, screen, clock = init[1], init[2], init[3]
+
     # Set variables
     step_prev = 0
     step = 0
     steps = len(avatars) - 1
-
-    # Configure microphone
-    FRAMES_PER_BUFFER = 2048 // 2
-    pA = pyaudio.PyAudio()
-    mic = pA.open(
-        format = pyaudio.paFloat32, channels = 1,
-        rate = 44100, input = True,
-        frames_per_buffer = FRAMES_PER_BUFFER
-    )
-
-    size, screen, clock = vtuberInit()
 
     running = True
 
