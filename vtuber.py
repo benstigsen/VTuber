@@ -12,15 +12,17 @@ PATH_OUTFITS  = "outfits"
 # Mouth region to be updated (x, y, w, h)
 REGION_MOUTH = (260, 370, 470, 210)
 
-BLANK   = 0
-INTRO   = 1
-TALK    = 2
-OUTRO   = 3
-DANCE   = 4
-stage   = BLANK
+BLANK = 0
+INTRO = 1
+TALK  = 2
+OUTRO = 3
+DANCE = 4
+IDLE  = 5
+stage = BLANK
 
 screen = None
 avatars, outfits, animations = None, None, None
+outfit_current = None
 
 # Get image size to make canvas fit image
 img_size = 0, 0
@@ -78,10 +80,18 @@ def vtuberChangeAvatar(n):
     pass
 
 # Change outfit
-def vtuberChangeOutfit(outfit):
-    screen.blit(outfits[outfit], (0, 0))
+def vtuberChangeOutfit(outfit = None):
+    global outfit_current
+    if (outfit == None):
+        if (outfit_current == None):
+            screen.blit(avatars[0], (0, 0))
+        else:
+            screen.blit(outfits[outfit_current], (0, 0))
+    else:
+        outfit_current = outfit
+        screen.blit(outfits[outfit_current], (0, 0))
+
     pygame.display.update()
-    pass
 
 # Redraw screen
 def vtuberRedraw(step = 0):
@@ -133,8 +143,19 @@ def main():
             # Extras
             elif (event.type == pygame.KEYUP):
                 # Intro
-                if ((event.key == pygame.K_i) and ((stage == BLANK) or (stage == None))):
+                if ((event.key == pygame.K_i) and ((stage == BLANK) or (stage == None) or (stage == IDLE))):
                     stage = INTRO
+                # Idle (no mouth movement)
+                elif ((event.key == pygame.K_s) and (
+                    (stage == TALK) or 
+                    (stage == IDLE) or 
+                    (stage == DANCE) or
+                    (stage == None))):
+
+                    if (stage == None):
+                        stage = TALK
+                    else:
+                        stage = IDLE
                 # Reload
                 elif (event.key == pygame.K_r):
                     vtuberRedraw()
@@ -224,6 +245,13 @@ def main():
                 pygame.display.update()
                 step = 0
                 stage = TALK
+
+        # Idle
+        elif (stage == IDLE):
+            screen.fill((255, 255, 255))
+            vtuberChangeOutfit()
+            stage = None
+            pygame.display.update()
 
         # Draw blank screen (only once)
         if (stage == BLANK):
